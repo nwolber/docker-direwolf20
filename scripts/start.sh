@@ -1,4 +1,6 @@
 #!/bin/sh
+cd /data
+
 if [ ! -f minecraft_server.1.7.10.jar ]; then
     echo "running install script!"
     ./install.sh
