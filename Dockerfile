@@ -4,8 +4,8 @@
 # Builds a basic docker image that can run a Minecraft server
 # (http://minecraft.net/).
 #
-# Authors: Isaac Bythewood
-# Updated: Dec 14th, 2014
+# Authors: Isaac Bythewood, Niklas Wolber
+# Updated: 2014-12-18
 # Require: Docker (http://www.docker.io/)
 # -----------------------------------------------------------------------------
 
@@ -19,19 +19,16 @@ ENV    DEBIAN_FRONTEND noninteractive
 
 
 # Download and install everything from the repos.
-RUN    apt-get --yes update; apt-get --yes upgrade; apt-get --yes install software-properties-common
-RUN    sudo apt-add-repository --yes ppa:webupd8team/java; apt-get --yes update
-RUN    echo debconf shared/accepted-oracle-license-v1-1 select true | debconf-set-selections  && \
-       echo debconf shared/accepted-oracle-license-v1-1 seen true | debconf-set-selections  && \
-       apt-get --yes install curl oracle-java8-installer
+RUN    apt-get --y update; apt-get --y upgrade; apt-get --y install wget openjdk-7-jre-headless;
 
 
 # Load in all of our config files.
-ADD    ./scripts/start /start
+ADD    ./scripts/start.sh /start.sh
+ADD    ./scripts/install.sh /install.sh
 
 
 # Fix all permissions
-RUN    chmod +x /start
+RUN    chmod +x /start.sh; chmod +x /install.sh
 
 
 # 25565 is for minecraft
@@ -41,4 +38,4 @@ EXPOSE 25565
 VOLUME ["/data"]
 
 # /start runs it.
-CMD    ["/start"]
+CMD    ["/start.sh"]
