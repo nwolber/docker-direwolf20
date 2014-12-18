@@ -19,7 +19,7 @@ ENV    DEBIAN_FRONTEND noninteractive
 
 
 # Download and install everything from the repos.
-RUN    apt-get --y update; apt-get --y upgrade; apt-get --y install wget openjdk-7-jre-headless;
+RUN    apt-get -y update; apt-get -y upgrade; apt-get -y install wget openjdk-7-jre-headless;
 
 
 # Load in all of our config files.
